@@ -1,0 +1,36 @@
+# Ignorar node_modules, já que será instalado no contêiner
+node_modules
+
+# Ignorar diretórios de build
+dist
+build
+
+# Ignorar arquivos de configuração de ambiente local
+.env
+.env.local
+.env.*.local
+
+# Ignorar logs
+*.log
+logs
+*.log.*
+
+# Ignorar arquivos temporários e de backup do sistema
+*.swp
+*~
+.*.swp
+.*.swo
+*.bak
+*.tmp
+*.temp
+
+# Ignorar arquivos de cache
+.cache
+.next
+.nuxt
+
+# Ignorar arquivos de test e configuração que não são necessários em produção
+coverage
+.vscode
+.idea
+.DS_Store
