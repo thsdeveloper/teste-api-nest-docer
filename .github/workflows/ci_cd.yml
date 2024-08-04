@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Google Cloud Artifact Registry
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-push:
