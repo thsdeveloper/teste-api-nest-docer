@@ -54,12 +54,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Setup Google Cloud SQL Proxy
-        uses: alikbo/gce-cloudsql-proxy-github-actions@v1.0.0
-        with:
-          creds: ${{ secrets.GCP_SA_KEY }}
-          instance: ${{ secrets.INSTANCE_CONNECTION_NAME }}
-          port: 5432
+#      - name: Setup Google Cloud SQL Proxy
+#        uses: alikbo/gce-cloudsql-proxy-github-actions@v1.0.0
+#        with:
+#          creds: ${{ secrets.GCP_SA_KEY }}
+#          instance: ${{ secrets.INSTANCE_CONNECTION_NAME }}
+#          port: 5432
 
       - name: Build and push Docker image
         id: build-and-push
@@ -71,13 +71,13 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
-            INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}
+#          build-args: |
+#            DATABASE_URL=${{ secrets.DATABASE_URL }}
+#            JWT_SECRET=${{ secrets.JWT_SECRET }}
+#            INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}
 
-      - name: Copy credentials to container
-        run: docker cp credentials.json <container_id>:/app/credentials.json
+#      - name: Copy credentials to container
+#        run: docker cp credentials.json <container_id>:/app/credentials.json
 
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
