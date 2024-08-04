@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Google Cloud Artifact Registry
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-push:
@@ -41,7 +41,3 @@ jobs:
           tags: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/my-repo/my-image:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          build-args: |
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            JWT_SECRET=${{ secrets.JWT_SECRET }}
-            INSTANCE_CONNECTION_NAME=${{ secrets.INSTANCE_CONNECTION_NAME }}
