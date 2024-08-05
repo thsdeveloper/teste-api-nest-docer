@@ -1,4 +1,4 @@
-name: Build and Push Docker image to Google Artifact Registry
+name: Build, Push, and Deploy Docker image to Google Cloud Run
 
 on:
   push:
@@ -11,10 +11,7 @@ on:
 env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: us.gcr.io
-  # github.repository as <account>/<repo>
-  #IMAGE_NAME: ${{ github.repository }}
   IMAGE_NAME: flashinvesting/flash
-
 
 jobs:
   build:
@@ -47,3 +44,16 @@ jobs:
           tags: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flash-repositorio/flash-investing-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Deploy to Cloud Run
+        env:
+          PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+          SERVICE_NAME: flash-investing-api
+          IMAGE: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flash-repositorio/flash-investing-api:latest
+        run: |
+          gcloud config set project $PROJECT_ID
+          gcloud run deploy $SERVICE_NAME \
+            --image $IMAGE \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
