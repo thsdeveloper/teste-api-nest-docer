@@ -44,6 +44,6 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flash-repositorio/my-image-test-api:latest
+          tags: us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/flash-repositorio/flash-investing-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
