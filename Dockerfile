@@ -35,7 +35,7 @@ COPY --from=builder /usr/src/app/package*.json ./
 ENV NODE_ENV=production
 
 # Expõe a porta da aplicação
-EXPOSE 3000
+EXPOSE 8080
 
 # Comando para rodar a aplicação
 CMD ["node", "dist/main"]
