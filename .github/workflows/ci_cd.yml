@@ -3,13 +3,11 @@ name: Build, Push, and Deploy Docker image to Google Cloud Run
 on:
   push:
     branches: [ "master" ]
-    # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "master" ]
 
 env:
-  # Use docker.io for Docker Hub if empty
   REGISTRY: us.gcr.io
   IMAGE_NAME: flashinvesting/flash
 
@@ -35,6 +33,22 @@ jobs:
       - name: Configure docker for Google Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Migrate Prisma schema
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npx prisma migrate deploy
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5

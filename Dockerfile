@@ -13,8 +13,15 @@ RUN npm install
 # Copia o restante da aplicação para o diretório de trabalho
 COPY . .
 
+# Copia o arquivo de configuração de ambiente
+COPY .env.production .env
+
 # Compila o projeto NestJS
 RUN npm run build
+
+# Executa os comandos do Prisma
+RUN npx prisma generate
+RUN npx prisma migrate deploy
 
 # Etapa 2: Run
 FROM node:18-alpine AS runner
@@ -30,6 +37,7 @@ COPY --from=builder /usr/src/app/dist ./dist
 
 # Copia o arquivo de configuração
 COPY --from=builder /usr/src/app/package*.json ./
+COPY --from=builder /usr/src/app/.env ./
 
 # Define a variável de ambiente para produção
 ENV NODE_ENV=production
