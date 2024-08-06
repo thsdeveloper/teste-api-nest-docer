@@ -6,7 +6,6 @@ dist
 build
 
 # Ignorar arquivos de configuração de ambiente local
-.env.production
 .env.local
 .env.*.local
 
