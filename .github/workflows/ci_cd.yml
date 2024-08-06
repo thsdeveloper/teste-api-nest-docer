@@ -70,3 +70,4 @@ jobs:
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated
+            --set-env-vars DATABASE_URL=${{ secrets.DATABASE_URL }}
