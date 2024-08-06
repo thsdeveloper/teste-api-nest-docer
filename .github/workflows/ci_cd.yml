@@ -34,25 +34,6 @@ jobs:
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Download Cloud SQL Auth Proxy
-        run: |
-          wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
-          chmod +x cloud_sql_proxy
-
-      - name: Start Cloud SQL Auth Proxy
-        run: |
-          ./cloud_sql_proxy -instances=${{ secrets.CLOUD_SQL_INSTANCE_CONNECTION_NAME }}=tcp:5432 &
-        env:
-          CLOUD_SQL_INSTANCE_CONNECTION_NAME: ${{ secrets.CLOUD_SQL_INSTANCE_CONNECTION_NAME }}
-
       - name: Generate Prisma client
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
