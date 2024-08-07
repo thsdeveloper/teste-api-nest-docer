@@ -13,6 +13,9 @@ RUN yarn install
 # Copia o restante da aplicação para o diretório de trabalho
 COPY . .
 
+# Gera o cliente Prisma
+RUN npx prisma generate
+
 # Compila o projeto NestJS
 RUN yarn build
 
@@ -38,4 +41,4 @@ ENV NODE_ENV=production
 EXPOSE 8080
 
 # Comando para rodar a aplicação
-CMD ["node", "dist/main"]
+CMD ["yarn", "start:prod"]
